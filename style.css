@@ -1,0 +1,265 @@
+:root {
+  --page: #151b26;
+  --card: #080b10;
+  --accent: #6a3fbf;
+  --accent-hover: #7c52d4;
+  --panel: rgba(255, 255, 255, 1);
+  --text: #ffffff;
+  --muted: #8b8f98;
+}
+
+* {
+  box-sizing: border-box;
+}
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 1rem;
+  display: grid;
+  place-items: start center;
+  overflow: hidden;
+  background: var(--page);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+/* Same sizing as your QR app: full width, capped at 1050px.
+   Height fills the window but never gets taller than 620px. */
+.app {
+  width: 100%;
+  max-width: 1050px;
+  height: 100%;
+  max-height: 620px;
+  padding: 1.5rem 2rem 1rem;
+  background: var(--card);
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Header with more breathing room */
+.app-header {
+  text-align: center;
+  padding-bottom: 0.5rem;
+}
+.app-header h1 {
+  margin: 0 0 0.6rem;
+  color: var(--accent);
+  font-size: 1.8rem;
+}
+.app-header p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.editor-layout {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 1.2rem 0;
+}
+
+/* Left */
+.controls-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  min-height: 0;
+}
+
+#dropzone {
+  width: 100%;
+  padding: 1.1rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  text-align: center;
+  background: #fff;
+  color: #444;
+  border: 2px dashed #bbb;
+  border-radius: 10px;
+  transition: 0.2s;
+}
+#dropzone p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+#dropzone.over {
+  border-color: var(--accent);
+  background: #efe9fb;
+}
+
+button {
+  background: var(--accent);
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 0.15s;
+}
+button:hover {
+  background: var(--accent-hover);
+}
+
+.settings-panel {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: var(--panel);
+  border-radius: 12px;
+  color: #111;
+}
+.settings-panel h2 {
+  margin: 0 0 0.6rem;
+  text-align: center;
+  font-size: 1rem;
+}
+.control-group label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  margin-bottom: 0.3rem;
+}
+.control-group input[type="range"] {
+  width: 100%;
+  margin: 0;
+  accent-color: var(--accent);
+}
+.hint {
+  margin: 0.4rem 0 0;
+  font-size: 0.75rem;
+  color: #222;
+}
+
+/* Right: list of up to 6 results */
+.results-panel {
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 0.25rem;
+}
+#results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#results:empty::before {
+  content: "Cleaned images will appear here (last 6 are kept).";
+  display: block;
+  padding: 1.5rem 0.75rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+  border: 1px dashed #2a303c;
+  border-radius: 10px;
+}
+#results li {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.45rem;
+  padding: 0.45rem 0.6rem;
+  background: #11151c;
+  border-radius: 10px;
+}
+#results img {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: #fff;
+}
+#results .name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.8rem;
+}
+#results button {
+  padding: 0.35rem 0.8rem;
+  font-size: 0.8rem;
+}
+
+/* Footer with more space */
+.app-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  padding: 1.1rem 0.25rem 0.4rem;
+  border-top: 1px solid #fff;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+.footer-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+}
+.footer-right {
+  display: flex;
+  gap: 2rem;
+}
+.footer-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--muted);
+  text-decoration: none;
+}
+.footer-link:hover {
+  color: #fff;
+}
+.footer-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Narrow screens: stack and allow normal scrolling */
+@media (max-width: 700px) {
+  html,
+  body {
+    height: auto;
+  }
+  body {
+    overflow: auto;
+    display: block;
+    padding: 0.5rem;
+  }
+  .app {
+    height: auto;
+    max-height: none;
+    padding: 1.2rem 1rem 0.8rem;
+  }
+  .editor-layout {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+  .results-panel {
+    max-height: 40vh;
+  }
+  .footer-right {
+    gap: 1.2rem;
+  }
+}
