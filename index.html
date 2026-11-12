@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Metadata Cleaner</title>
+    <title>AI Metadata Cleaner</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <main class="app">
       <div class="app-header">
-        <h1>Metadata Cleaner</h1>
+        <h1>AI Metadata Cleaner</h1>
         <p>
           Remove embedded metadata from your images. Runs fully in your browser.
         </p>
@@ -32,22 +32,35 @@
 
           <div class="settings-panel">
             <h2>Output Settings</h2>
+
             <div class="control-group">
               <label for="quality">
                 <span>JPG / WebP Quality</span>
                 <span id="qualityVal">95%</span>
               </label>
               <input id="quality" type="range" min="60" max="100" value="95" />
+              <p class="hint">PNG is always lossless.</p>
             </div>
-            <p class="hint">PNG is always lossless.</p>
-          </div>
 
-          <button id="downloadAll" type="button" hidden>Download all</button>
+            <label class="check-row" for="addSuffix">
+              <input id="addSuffix" type="checkbox" checked />
+              <span>Add “-cleaned” to file names</span>
+            </label>
+          </div>
         </section>
 
         <!-- RIGHT SIDE -->
         <section class="results-panel">
           <ul id="results"></ul>
+
+          <div class="results-actions" id="resultsActions" hidden>
+            <button id="downloadAll" type="button" hidden>
+              Download all (.zip)
+            </button>
+            <button id="clearAll" type="button" class="secondary">
+              Clear all
+            </button>
+          </div>
         </section>
       </div>
 
@@ -63,7 +76,7 @@
 
         <div class="footer-right">
           <a
-            href="https://github.com/VerzatileDev"
+            href="https://github.com/VerzatileDev/metadata-cleaner"
             target="_blank"
             rel="noopener noreferrer"
             class="footer-link"

@@ -32,8 +32,6 @@ body {
   font-size: 14px;
 }
 
-/* Same sizing as your QR app: full width, capped at 1050px.
-   Height fills the window but never gets taller than 620px. */
 .app {
   width: 100%;
   max-width: 1050px;
@@ -47,7 +45,6 @@ body {
   overflow: hidden;
 }
 
-/* Header with more breathing room */
 .app-header {
   text-align: center;
   padding-bottom: 0.5rem;
@@ -117,6 +114,12 @@ button {
 button:hover {
   background: var(--accent-hover);
 }
+button.secondary {
+  background: #2a303c;
+}
+button.secondary:hover {
+  background: #3a4150;
+}
 
 .settings-panel {
   width: 100%;
@@ -147,16 +150,33 @@ button:hover {
   color: #222;
 }
 
-/* Right: list of up to 6 results */
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.7rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.check-row input {
+  accent-color: var(--accent);
+  margin: 0;
+}
+
+/* Right: list + actions */
 .results-panel {
   min-height: 0;
-  overflow-y: auto;
-  padding-right: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
 }
 #results {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 0.25rem 0 0;
 }
 #results:empty::before {
   content: "Cleaned images will appear here (last 6 are kept).";
@@ -195,8 +215,17 @@ button:hover {
   padding: 0.35rem 0.8rem;
   font-size: 0.8rem;
 }
+#results button.remove {
+  padding: 0.35rem 0.6rem;
+}
 
-/* Footer with more space */
+.results-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+}
+
+/* Footer */
 .app-footer {
   display: flex;
   justify-content: space-between;
@@ -213,9 +242,10 @@ button:hover {
   gap: 0.9rem;
 }
 .footer-avatar {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
+  object-fit: cover;
 }
 .footer-right {
   display: flex;
@@ -236,7 +266,7 @@ button:hover {
   height: 18px;
 }
 
-/* Narrow screens: stack and allow normal scrolling */
+/* Narrow screens */
 @media (max-width: 700px) {
   html,
   body {
@@ -256,7 +286,7 @@ button:hover {
     grid-template-columns: 1fr;
     gap: 1.2rem;
   }
-  .results-panel {
+  #results {
     max-height: 40vh;
   }
   .footer-right {
