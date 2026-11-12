@@ -271,30 +271,33 @@ button.secondary:hover {
   height: 18px;
 }
 
-/* Narrow screens */
-@media (max-width: 700px) {
-  html,
-  body {
-    height: auto;
+@media (hover: none) and (pointer: coarse) {
+  #dropzone {
+    padding: 0;
+    background: none;
+    border: 0;
+    gap: 0;
   }
-  body {
-    overflow: auto;
-    display: block;
-    padding: 0.5rem;
+  #dropzone p {
+    display: none;
   }
-  .app {
-    height: auto;
-    max-height: none;
-    padding: 1.2rem 1rem 0.8rem;
+  #pickBtn {
+    width: 100%;
+    min-height: 48px;
+    font-size: 1rem;
   }
-  .editor-layout {
-    grid-template-columns: 1fr;
-    gap: 1.2rem;
+
+  button {
+    min-height: 44px;
   }
-  #results {
-    max-height: 40vh;
+  #results button {
+    min-height: 40px;
   }
-  .footer-right {
-    gap: 1.2rem;
+  input[type="range"] {
+    height: 28px;
+  }
+  .check-row input {
+    width: 20px;
+    height: 20px;
   }
 }
