@@ -271,33 +271,48 @@ button.secondary:hover {
   height: 18px;
 }
 
-@media (hover: none) and (pointer: coarse) {
-  #dropzone {
-    padding: 0;
-    background: none;
-    border: 0;
-    gap: 0;
+/* Stack everything top to bottom on small screens AND on touch devices */
+@media (max-width: 900px), (hover: none) and (pointer: coarse) {
+  html,
+  body {
+    height: auto;
   }
-  #dropzone p {
-    display: none;
-  }
-  #pickBtn {
-    width: 100%;
-    min-height: 48px;
-    font-size: 1rem;
+  body {
+    display: block;
+    overflow: auto;
+    padding: 0.5rem;
   }
 
-  button {
-    min-height: 44px;
+  .app {
+    height: auto;
+    max-height: none;
+    padding: 1.2rem 1rem 0.8rem;
   }
-  #results button {
-    min-height: 40px;
+
+  .editor-layout {
+    display: flex;
+    flex-direction: column;
+    flex: none;
+    gap: 1.2rem;
   }
-  input[type="range"] {
-    height: 28px;
+  .controls-panel,
+  .results-panel {
+    width: 100%;
   }
-  .check-row input {
-    width: 20px;
-    height: 20px;
+  #results {
+    max-height: 40vh;
+  }
+
+  .app-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .app-footer {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .footer-right {
+    gap: 1.2rem;
   }
 }
