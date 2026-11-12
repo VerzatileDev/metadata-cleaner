@@ -64,7 +64,7 @@ body {
   flex: 1;
   min-height: 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 2rem;
   margin: 1.2rem 0;
 }
@@ -197,6 +197,10 @@ button.secondary:hover {
   background: #11151c;
   border-radius: 10px;
 }
+#results img,
+#results button {
+  flex-shrink: 0;
+}
 #results img {
   width: 36px;
   height: 36px;
@@ -206,6 +210,7 @@ button.secondary:hover {
 }
 #results .name {
   flex: 1;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

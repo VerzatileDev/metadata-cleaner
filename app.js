@@ -24,6 +24,7 @@ qualityInput.addEventListener("input", () => {
 addSuffix.addEventListener("change", () => {
   entries.forEach((e) => {
     e.nameEl.textContent = getName(e);
+    e.nameEl.title = getName(e);
   });
 });
 
@@ -116,6 +117,7 @@ function addRow(data) {
   entry.li = li;
   entry.nameEl = li.querySelector(".name");
   entry.nameEl.textContent = getName(entry);
+  entry.nameEl.title = getName(entry);
   li.querySelector(".remove").addEventListener("click", () =>
     removeEntry(entry),
   );
