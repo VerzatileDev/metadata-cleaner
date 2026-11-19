@@ -15,7 +15,7 @@ const SUPPORTED = {
   "image/webp": "webp",
 };
 const MAX_ITEMS = 6; // when exceeded, the oldest entries are removed
-const entries = []; // { li, nameEl, url, blob, base, ext, label }
+const entries = []; // { li, nameEl, url, blob, base, ext, label, video }
 
 /* ---------- settings ---------- */
 qualityInput.addEventListener("input", () => {
@@ -52,17 +52,20 @@ dropzone.addEventListener("drop", (e) => handleFiles(e.dataTransfer.files));
 /* ---------- processing ---------- */
 async function handleFiles(fileList) {
   for (const file of Array.from(fileList)) {
-    if (!SUPPORTED[file.type]) {
-      addRow({ label: file.name + " (unsupported format)" });
-      continue;
-    }
+    const base = file.name.replace(/\.[^.]+$/, "");
     try {
-      const blob = await cleanImage(file);
-      addRow({
-        blob,
-        base: file.name.replace(/\.[^.]+$/, ""),
-        ext: SUPPORTED[file.type],
-      });
+      if (SUPPORTED[file.type]) {
+        const blob = await cleanImage(file);
+        addRow({ blob, base, ext: SUPPORTED[file.type] });
+        continue;
+      }
+      const fmt = await VideoCleaner.detect(file);
+      if (!fmt) {
+        addRow({ label: file.name + " (unsupported format)" });
+        continue;
+      }
+      const { blob, ext } = await VideoCleaner.clean(file, fmt);
+      addRow({ blob, base, ext, video: true });
     } catch (err) {
       console.error(err);
       addRow({ label: file.name + " (failed)" });
@@ -97,15 +100,43 @@ function getName(e) {
     : `${e.base}.${e.ext}`;
 }
 
+function makeIconThumb() {
+  const d = document.createElement("div");
+  d.className = "thumb";
+  d.textContent = "🎬";
+  return d;
+}
+
 function addRow(data) {
   const entry = { ...data, url: null };
   const li = document.createElement("li");
 
   if (entry.blob) {
     entry.url = URL.createObjectURL(entry.blob);
-    li.innerHTML = `<img src="${entry.url}" alt=""><span class="name"></span>
+
+    let thumb;
+    if (entry.video) {
+      thumb = document.createElement("video");
+      thumb.muted = true;
+      thumb.playsInline = true;
+      thumb.preload = "metadata";
+      thumb.src = entry.url + "#t=0.1";
+    } else {
+      thumb = document.createElement("img");
+      thumb.alt = "";
+      thumb.src = entry.url;
+    }
+    thumb.className = "thumb";
+    // MKV/AVI (and anything the browser can't decode) get an icon instead
+    thumb.addEventListener("error", () => thumb.replaceWith(makeIconThumb()));
+    li.appendChild(thumb);
+
+    li.insertAdjacentHTML(
+      "beforeend",
+      `<span class="name"></span>
       <button type="button" class="download">Download</button>
-      <button type="button" class="remove secondary" aria-label="Remove" title="Remove">✕</button>`;
+      <button type="button" class="remove secondary" aria-label="Remove" title="Remove">✕</button>`,
+    );
     li.querySelector(".download").addEventListener("click", () =>
       saveBlob(entry.blob, getName(entry)),
     );
@@ -184,7 +215,13 @@ downloadAll.addEventListener("click", async () => {
     const files = entries
       .filter((e) => e.blob)
       .map((e) => ({ name: uniqueName(getName(e), used), blob: e.blob }));
-    saveBlob(await makeZip(files), "cleaned-images.zip");
+    if (files.reduce((s, f) => s + f.blob.size, 0) > 1.5 * 1024 ** 3) {
+      alert(
+        "Too large to zip in the browser. Please download the files individually.",
+      );
+      return;
+    }
+    saveBlob(await makeZip(files), "cleaned-files.zip");
   } catch (err) {
     console.error(err);
   } finally {

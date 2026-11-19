@@ -11,7 +11,8 @@
       <div class="app-header">
         <h1>AI Metadata Cleaner</h1>
         <p>
-          Remove embedded metadata from your images. Runs fully in your browser.
+          Remove embedded metadata from your images and videos. Runs fully in
+          your browser.
         </p>
       </div>
 
@@ -19,12 +20,15 @@
         <!-- LEFT SIDE -->
         <section class="controls-panel">
           <div id="dropzone" tabindex="0">
-            <p>Drag &amp; drop images here</p>
+            <p>Drag &amp; drop images or videos here</p>
             <button id="pickBtn" type="button">Choose files</button>
+            <small class="formats"
+              >PNG, JPG, WebP · MP4, MOV, WebM, MKV, AVI, 3GP</small
+            >
             <input
               id="fileInput"
               type="file"
-              accept="image/png,image/jpeg,image/webp"
+              accept="image/png,image/jpeg,image/webp,video/*,.mp4,.m4v,.mov,.3gp,.3g2,.webm,.mkv,.avi"
               multiple
               hidden
             />
@@ -35,11 +39,14 @@
 
             <div class="control-group">
               <label for="quality">
-                <span>JPG / WebP Quality</span>
+                <span>Image quality (JPG / WebP)</span>
                 <span id="qualityVal">95%</span>
               </label>
               <input id="quality" type="range" min="60" max="100" value="95" />
-              <p class="hint">PNG is always lossless.</p>
+              <p class="hint">
+                PNG is always lossless. Videos are cleaned without re-encoding,
+                so there is no quality loss.
+              </p>
             </div>
 
             <label class="check-row" for="addSuffix">
@@ -109,7 +116,7 @@
         </div>
       </footer>
     </main>
-
+    <script src="video-clean.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

@@ -96,6 +96,10 @@ body {
   margin: 0;
   font-size: 0.9rem;
 }
+#dropzone .formats {
+  font-size: 0.72rem;
+  color: #777;
+}
 #dropzone.over {
   border-color: var(--accent);
   background: #efe9fb;
@@ -179,7 +183,7 @@ button.secondary:hover {
   padding: 0 0.25rem 0 0;
 }
 #results:empty::before {
-  content: "Cleaned images will appear here (last 6 are kept).";
+  content: "Cleaned images and videos will appear here (last 6 are kept).";
   display: block;
   padding: 1.5rem 0.75rem;
   text-align: center;
@@ -197,16 +201,22 @@ button.secondary:hover {
   background: #11151c;
   border-radius: 10px;
 }
-#results img,
+#results .thumb,
 #results button {
   flex-shrink: 0;
 }
-#results img {
+#results .thumb {
   width: 36px;
   height: 36px;
   object-fit: cover;
   border-radius: 6px;
   background: #fff;
+}
+#results div.thumb {
+  display: grid;
+  place-items: center;
+  background: #2a303c;
+  font-size: 1.1rem;
 }
 #results .name {
   flex: 1;
